@@ -3,6 +3,8 @@ from rest_framework.permissions import AllowAny
 from .models import User, Article
 from .permissions import IsUserOrReadOnly, IsArticleOrReadOnly
 from .serializers import CreateUserSerializer, UserSerializer, ArticleSerializer
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -38,4 +40,7 @@ class ArticleViewSet(mixins.RetrieveModelMixin,
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = (IsArticleOrReadOnly,)
+
+    def update(self, request, *args, **kwargs):
+        return Response(data=request.data, status=HTTP_200_OK)
 
